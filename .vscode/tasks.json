@@ -12,13 +12,8 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-I",
                 "C:\\GLFW\\include",
-                "-I",
-                "C:\\OPENGL\\GLEW\\include",
-                "-L",
-                "C:\\OPENGL\\GLEW\\lib",
                 "-L",
                 "C:\\GLFW\\lib",
-                "-lglew32dll",
                 "-llibglfw3",
                 ""
             ],
