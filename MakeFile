@@ -1,0 +1,1 @@
+g++ "D:\opengl temp\Opengl-Glfw-template\source\EBO.cpp"  "D:\opengl temp\Opengl-Glfw-template\source\shaderClass.cpp" "D:\opengl temp\Opengl-Glfw-template\source\VAO.cpp" "D:\opengl temp\Opengl-Glfw-template\source\VBO.cpp" glad.c main.cpp -I"C:\GLFW\include" -I"D:\opengl temp\Opengl-Glfw-template\headers" -o toOne.o
