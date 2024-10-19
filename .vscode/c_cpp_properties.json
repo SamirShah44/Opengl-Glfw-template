@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:\\GLFW\\include",
-                "${workspaceFolder}/headers"
+                "${workspaceFolder}\\header",
+                "${workspaceFolder}"
             ],
             "defines": [
                 "_DEBUG",
