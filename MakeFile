@@ -1,1 +1,36 @@
-g++ "D:\opengl temp\Opengl-Glfw-template\source\EBO.cpp"  "D:\opengl temp\Opengl-Glfw-template\source\shaderClass.cpp" "D:\opengl temp\Opengl-Glfw-template\source\VAO.cpp" "D:\opengl temp\Opengl-Glfw-template\source\VBO.cpp" glad.c main.cpp -I"C:\GLFW\include" -I"D:\opengl temp\Opengl-Glfw-template\headers" -o toOne.o
+
+#My makefile
+# Compiler
+CC = g++
+CXX = g++
+
+# Compiler flags
+CFLAGS = -I C:/GLFW/include -I ./header -L C:/GLFW/lib -lglfw3dll -lopengl32
+
+# Project directories
+SRC_DIR = ./source
+HEADER_DIR = ./header
+
+# Executable name
+TARGET = main
+
+# Source files (can be modified to include more files)
+SRCS = main.cpp glad.c $(SRC_DIR)/shader.cpp
+
+# Object files (generated from source files)
+OBJS = $(SRCS:.cpp=.o)
+
+# Build rule
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) -o $(TARGET) $(CFLAGS) && $(TARGET)
+
+# Rule to compile source files into object files
+%.o: %.cpp
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+# Clean up (Windows compatible)
+clean:
+	del /Q *.o "$(SRC_DIR)\shader.o" $(TARGET).exe
+
+# Phony targets (so clean always runs)
+.PHONY: clean
