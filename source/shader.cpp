@@ -1,7 +1,7 @@
-#include "shader.h"
+#include "shader/shader.h"
 
 // Reads a text file and outputs a string with everything in the text file
-std::string get_file_contents(const char* filename)
+std::string get_file_contents(const char *filename)
 {
 	std::ifstream in(filename, std::ios::binary);
 	if (in)
@@ -12,19 +12,23 @@ std::string get_file_contents(const char* filename)
 		in.seekg(0, std::ios::beg);
 		in.read(&contents[0], contents.size());
 		in.close();
-		return(contents);
+		return (contents);
 	}
 	throw(errno);
 }
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
-    {
-        // Read vertexFile and fragmentFile and store the strings
+Shader::Shader(const char *vertexPath, const char *fragmentPath)
+{
+	// Read vertexFile and fragmentFile and store the strings
 	std::string vertexCode = get_file_contents(vertexPath);
 	std::string fragmentCode = get_file_contents(fragmentPath);
 
+
+	std::cout<< "Vertex path : " << vertexPath << std::endl;
+	std::cout<< "fragment path : " << fragmentPath << std::endl;
+
 	// Convert the shader source strings into character arrays
-	const char* vertexSource = vertexCode.c_str();
-	const char* fragmentSource = fragmentCode.c_str();
+	const char *vertexSource = vertexCode.c_str();
+	const char *fragmentSource = fragmentCode.c_str();
 
 	// Create Vertex Shader Object and get its reference
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -51,4 +55,13 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	// Delete the now useless Vertex and Fragment Shader objects
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
-    }
+}
+void Shader::Activate()
+{
+	glUseProgram(ID);
+}
+
+void Shader::Delete()
+{
+	glDeleteProgram(ID);
+}

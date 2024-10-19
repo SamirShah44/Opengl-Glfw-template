@@ -1,11 +1,10 @@
 
-#My makefile
 # Compiler
 CC = g++
 CXX = g++
 
 # Compiler flags
-CFLAGS = -I C:/GLFW/include -I ./header -L C:/GLFW/lib -lglfw3dll -lopengl32
+CFLAGS = -I C:/GLFW/include -I./header -L C:/GLFW/lib -lglfw3dll -lopengl32
 
 # Project directories
 SRC_DIR = ./source
@@ -15,14 +14,15 @@ HEADER_DIR = ./header
 TARGET = main
 
 # Source files (can be modified to include more files)
-SRCS = main.cpp glad.c $(SRC_DIR)/shader.cpp
+SRC_BUFFERS = $(SRC_DIR)/Vao_Vbo/EBO.cpp $(SRC_DIR)/Vao_Vbo/VBO.cpp $(SRC_DIR)/Vao_Vbo/VAO.cpp
+SRCS = main.cpp glad.c $(SRC_DIR)/shader.cpp $(SRC_BUFFERS)
 
 # Object files (generated from source files)
 OBJS = $(SRCS:.cpp=.o)
 
 # Build rule
 $(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET) $(CFLAGS) && $(TARGET)
+	$(CC) $(OBJS) -o $(TARGET) $(CFLAGS)
 
 # Rule to compile source files into object files
 %.o: %.cpp
@@ -34,3 +34,42 @@ clean:
 
 # Phony targets (so clean always runs)
 .PHONY: clean
+
+
+
+
+# #My makefile
+# # Compiler
+# CC = g++
+# CXX = g++
+
+# # Compiler flags
+# CFLAGS = -I C:/GLFW/include -I ./header -L C:/GLFW/lib -lglfw3dll -lopengl32
+
+# # Project directories
+# SRC_DIR = ./source
+# HEADER_DIR = ./header
+
+# # Executable name
+# TARGET = main
+
+# # Source files (can be modified to include more files)
+# SRCS = main.cpp glad.c $(SRC_DIR)/shader.cpp $(SRC_DIR)/Vao_Vbo/*.cpp
+
+# # Object files (generated from source files)
+# OBJS = $(SRCS:.cpp=.o)
+
+# # Build rule
+# $(TARGET): $(OBJS)
+# 	$(CC) $(OBJS) -o $(TARGET) $(CFLAGS) && $(TARGET)
+
+# # Rule to compile source files into object files
+# %.o: %.cpp
+# 	$(CC) -c $< -o $@ $(CFLAGS)
+
+# # Clean up (Windows compatible)
+# clean:
+# 	del /Q *.o "$(SRC_DIR)\shader.o" $(TARGET).exe
+
+# # Phony targets (so clean always runs)
+# .PHONY: clean
