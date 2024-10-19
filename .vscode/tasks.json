@@ -12,6 +12,7 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-I",
                 "C:\\GLFW\\include",
+                "-I${cwd}\\headers",
                 "-L",
                 "C:\\GLFW\\lib",
                 "-llibglfw3",

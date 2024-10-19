@@ -39,7 +39,9 @@
   "C_Cpp_Runner.linkerArgs": [],
   "C_Cpp_Runner.includePaths": [
     "C:\\OPENGL\\GLEW\\include",
-    "C:\\GLFW\\include"
+    "C:\\GLFW\\include",
+    "*",
+    "**/*"
   ],
   "C_Cpp_Runner.includeSearch": [
     "*",
@@ -65,7 +67,8 @@
     "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
     "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "zig": "zig run",
-    "cpp": "cd $dir && g++ main.cpp glad.c -o main -I C:\\GLFW\\include -L C:\\GLFW\\lib -lglfw3dll -lopengl32 && .\\main",
+                                                                //-I D:\\opengl temp\\Opengl-Glfw-template\\headers
+    "cpp": "cd $dir && g++ *.cpp glad.c -o main -I C:\\GLFW\\include -L C:\\GLFW\\lib -lglfw3dll -lopengl32 && .\\main",
     "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "php": "php",
     "python": "python -u",
@@ -156,5 +159,8 @@
     ".spwn": "spwn build",
     ".pkl": "cd $dir && pkl eval -f yaml $fileName -o $fileNameWithoutExt.yaml",
     ".gleam": "gleam run -m $fileNameWithoutExt"
+  },
+  "files.associations": {
+    "cmath": "cpp"
   }
 }
