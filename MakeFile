@@ -15,10 +15,10 @@ TARGET = main
 
 # Source files (can be modified to include more files)
 SRC_BUFFERS = $(SRC_DIR)/Vao_Vbo/EBO.cpp $(SRC_DIR)/Vao_Vbo/VBO.cpp $(SRC_DIR)/Vao_Vbo/VAO.cpp
-SRCS = main.cpp glad.c $(SRC_DIR)/shader.cpp $(SRC_BUFFERS)
+SRCS = main.cpp glad.c $(SRC_DIR)/shader.cpp $(SRC_BUFFERS) $(SRC_DIR)/stb.o
 
 # Object files (generated from source files)
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(SRCS:.cpp=.o) 
 
 # Build rule
 $(TARGET): $(OBJS)
