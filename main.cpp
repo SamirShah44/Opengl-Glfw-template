@@ -87,7 +87,7 @@ int main()
     int widthImg, heightImg, numColorCh;
     stbi_set_flip_vertically_on_load(true);
     unsigned char *bytes = (stbi_load("Resource\\texture\\wall.jpg", &widthImg, &heightImg, &numColorCh, 0));
-
+//Hello
     GLuint texture;
     glGenTextures(1, &texture);
     glActiveTexture(GL_TEXTURE0);
