@@ -67,7 +67,7 @@
     "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
     "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "zig": "zig run",
-    "cpp": "cd $dir && g++ main.cpp glad.c source\\shader.cpp source\\Vao_Vbo\\EBO.cpp source\\Vao_Vbo\\VBO.cpp source\\Vao_Vbo\\VAO.cpp source\\stb.o -o main -I C:\\GLFW\\include -I \"D:\\opengl temp\\Opengl-Glfw-template\\header\" -L C:\\GLFW\\lib -lglfw3dll -lopengl32 && .\\main",
+    "cpp": "cd $dir && g++ main.cpp glad.c source\\texture\\texture.cpp source\\shader.cpp source\\Vao_Vbo\\EBO.cpp source\\Vao_Vbo\\VBO.cpp source\\Vao_Vbo\\VAO.cpp source\\stb.o -o main -I C:\\GLFW\\include -I \"D:\\opengl temp\\Opengl-Glfw-template\\header\" -L C:\\GLFW\\lib -lglfw3dll -lopengl32 && .\\main",
     "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
     "php": "php",
     "python": "python -u",

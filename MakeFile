@@ -13,8 +13,8 @@ HEADER_DIR = ./header
 # Executable name
 TARGET = main
 
-# Source files (can be modified to include more files)
-SRC_BUFFERS = $(SRC_DIR)/Vao_Vbo/EBO.cpp $(SRC_DIR)/Vao_Vbo/VBO.cpp $(SRC_DIR)/Vao_Vbo/VAO.cpp
+# Source files (can be modified to include more files)                                         #$(SRC_DIR)/texture/texture.cpp
+SRC_BUFFERS = $(SRC_DIR)/Vao_Vbo/EBO.cpp $(SRC_DIR)/Vao_Vbo/VBO.cpp $(SRC_DIR)/Vao_Vbo/VAO.cpp 
 SRCS = main.cpp glad.c $(SRC_DIR)/shader.cpp $(SRC_BUFFERS) $(SRC_DIR)/stb.o
 
 # Object files (generated from source files)
@@ -28,9 +28,9 @@ $(TARGET): $(OBJS)
 %.o: %.cpp
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-# Clean up (Windows compatible)
+# Clean up (Windows compatible)						#"$(SRC_DIR)\texture\texture.o"
 clean:
-	del /Q *.o "$(SRC_DIR)\shader.o" $(TARGET).exe
+	del /Q *.o "$(SRC_DIR)\shader.o" $(TARGET).exe "$(SRC_DIR)\texture\texture.o"
 
 # Phony targets (so clean always runs)
 .PHONY: clean
