@@ -3,7 +3,7 @@
 Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType)
 {
 	// Assigns the type of the texture ot the texture object
-	// type = texType;
+	 type = texType;
 
 	// // Stores the width, height, and the number of color channels of the image
 	// int widthImg, heightImg, numColCh;
@@ -44,6 +44,8 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 unsigned int texture;
 
     glGenTextures(1, &ID);
+	glActiveTexture(slot);
+
     glBindTexture(texType, ID); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
     // set the texture wrapping parameters
     glTexParameteri(texType, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
@@ -65,7 +67,6 @@ unsigned int texture;
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);
-	
 }
 
 void Texture::texUnit(Shader& shader, const char* uniform, GLuint unit)
