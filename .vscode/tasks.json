@@ -12,6 +12,7 @@
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 "-I",
                 "C:\\GLFW\\include",
+                "-IC:\\OPENGL",
                 "-I${cwd}",
                 "-L",
                 "C:\\GLFW\\lib",

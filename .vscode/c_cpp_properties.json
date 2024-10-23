@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:\\GLFW\\include",
+                "C:\\OPENGL",
                 "${workspaceFolder}\\header",
                 "${workspaceFolder}"
             ],

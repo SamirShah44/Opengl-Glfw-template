@@ -4,7 +4,7 @@ CC = g++
 CXX = g++
 
 # Compiler flags
-CFLAGS = -I C:/GLFW/include -I./header -L C:/GLFW/lib -lglfw3dll -lopengl32
+CFLAGS = -I C:/GLFW/include -I C:/Opengl -I./header -L C:/GLFW/lib -lglfw3dll -lopengl32
 
 # Project directories
 SRC_DIR = ./source
