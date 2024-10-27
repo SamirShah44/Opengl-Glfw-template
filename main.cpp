@@ -1,5 +1,5 @@
 
-
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stb/stb_image.h>
@@ -13,12 +13,14 @@
 #include "Vao_Vbo/EBO.h"
 #include "Vao_Vbo/VAO.h"
 #include "Vao_Vbo/VBO.h"
-
+#include "Camera.h"
 #include <iostream>
 #include <math.h>
 
 const unsigned int width = 800;
 const unsigned int height = 800;
+
+
 
 // Vertices coordinates
 GLfloat vertices[] =
@@ -42,18 +44,12 @@ GLuint indices[] =
 };
 
 
-void processInput(GLFWwindow *window)
-{
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
-}
-
 int main()
 {
 	// Initialize GLFW
 	glfwInit();
 
-	// Tell GLFW what version of OpenGL we are using
+	// Tell GLFW what version of OpenGL we are using 
 	// In this case we are using OpenGL 3.3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -62,7 +58,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Create a GLFWwindow object of 800 by 800 pixels, naming it "YoutubeOpenGL"
-	GLFWwindow *window = glfwCreateWindow(width, height, "YoutubeOpenGL", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(width, height, "YoutubeOpenGL", NULL, NULL);
 	// Error check if the window fails to create
 	if (window == NULL)
 	{
@@ -73,14 +69,16 @@ int main()
 	// Introduce the window into the current context
 	glfwMakeContextCurrent(window);
 
-	// Load GLAD so it configures OpenGL
+	//Load GLAD so it configures OpenGL
 	gladLoadGL();
 	// Specify the viewport of OpenGL in the Window
 	// In this case the viewport goes from x = 0, y = 0, to x = 800, y = 800
 	glViewport(0, 0, width, height);
 
+
 	// Generates Shader object using shaders default.vert and default.frag
 	Shader shaderProgram("header\\shader\\shader.vs", "header\\shader\\shader.fs");
+
 
 	// Generates Vertex Array Object and binds it
 	VAO VAO1;
@@ -100,24 +98,26 @@ int main()
 	VBO1.Unbind();
 	EBO1.Unbind();
 
-	// Gets ID of uniform called "scale"
-	GLuint uniID = glGetUniformLocation(shaderProgram.ID, "scale");
+	// Texture
+	Texture brickTex("Resource\\texture\\brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 
-	Texture brick("Resource\\texture\\brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	// Texture face("Resource\\texture\\awesomeface.png", GL_TEXTURE_2D, GL_TEXTURE1, GL_RGBA, GL_UNSIGNED_BYTE);
-	brick.texUnit(shaderProgram, "tex0", 0);
-	// face.texUnit(shaderProgram, "tex1", 1);
+	brickTex.texUnit(shaderProgram, "tex0", 0);
 
-	float rotation = 0.0f;
-	double previousTime = glfwGetTime();
+	// Original code from the tutorial
+	/*Texture brickTex("brick.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	brickTex.texUnit(shaderProgram, "tex0", 0);*/
+
+
 
 	// Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
 
+	// Creates camera object
+	Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
+
 	// Main while loop
 	while (!glfwWindowShouldClose(window))
 	{
-		processInput(window);
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and depth buffer
@@ -125,36 +125,13 @@ int main()
 		// Tell OpenGL which Shader Program we want to use
 		shaderProgram.Activate();
 
-		// Simple timer
-		double crntTime = glfwGetTime();
-		if (crntTime - previousTime >= 1 / 60)
-		{
-			rotation += 0.01f;
-			previousTime = crntTime;
-		}
+		// Handles camera inputs
+		camera.Inputs(window);
+		// Updates and exports the camera matrix to the Vertex Shader
+		camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
 
-		// Initializes matrices so they are not the null matrix
-		glm::mat4 model = glm::mat4(1.0f);
-		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 proj = glm::mat4(1.0f);
-
-		// Assigns different transformations to each matrix
-		model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-		view = glm::translate(view, glm::vec3(0.0f, -0.5f, -2.0f));
-		proj = glm::perspective(glm::radians(45.0f), (float)width / height, 0.1f, 100.0f);
-
-		// Outputs the matrices into the Vertex Shader
-		int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		int viewLoc = glGetUniformLocation(shaderProgram.ID, "view");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		int projLoc = glGetUniformLocation(shaderProgram.ID, "proj");
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(proj));
-
-		// Assigns a value to the uniform; NOTE: Must always be done after activating the Shader Program
-		glUniform1f(uniID, 0.5f);
 		// Binds texture so that is appears in rendering
-		brick.Bind();
+		brickTex.Bind();
 		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
 		// Draw primitives, number of indices, datatype of indices, index of indices
@@ -165,13 +142,13 @@ int main()
 		glfwPollEvents();
 	}
 
+
+
 	// Delete all the objects we've created
 	VAO1.Delete();
 	VBO1.Delete();
 	EBO1.Delete();
-	// glDeleteTextures(1,&texture);
-	// brick.Delete();
-	// face.Delete();
+	brickTex.Delete();
 	shaderProgram.Delete();
 	// Delete window before ending the program
 	glfwDestroyWindow(window);
