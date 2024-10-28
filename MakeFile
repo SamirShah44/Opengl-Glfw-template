@@ -1,4 +1,3 @@
-
 # Compiler
 CC = g++
 CXX = g++
