@@ -209,6 +209,8 @@ int main()
 
 		// Tell OpenGL which Shader Program we want to use
 		shaderProgram.Activate();
+		// Exports the camera Position to the Fragment Shader for specular lighting
+		glUniform3f(glGetUniformLocation(shaderProgram.ID, "camPos"), camera.Position.x, camera.Position.y, camera.Position.z);
 		camera.Matrix(shaderProgram,"camMatrix");
 
 		// Binds texture so that is appears in rendering
